@@ -9,7 +9,7 @@ print("Lexing file -> " + sys.argv[1]);
 
 
 reserved_words = ["int","float", "char", "do", "for", "while", "if", "else"]
-delimiters = ["(", ")"]
+delimiters = ["(", ")", "{", "}", ";"]
 arithmetic_ops = ["+", "-", "*", "/", "=", "%"]
 logic_ops = ["<", "<=", ">", ">=", "!=", "=="]
 
@@ -21,16 +21,6 @@ f = open(sys.argv[1])
 def next_char():
 	global f
 	return f.read(1)
-
-
-current_char = next_char()
-# c = " "
-# while(c):
-# 	c = next_char()
-# 	if(c):
-# 		print(c)
-
-
 
 def get_number():
 	#Lê um número composto por digitos
@@ -74,6 +64,13 @@ def get_comment():
 
 
 
+
+
+
+
+current_char = next_char()
+
+
 while(current_char):
 
 	if(current_char == " " or current_char == "\n"):
@@ -111,8 +108,6 @@ while(current_char):
 			continue
 
 
-
-
 	#Operadores aritmeticos
 	elif(current_char in arithmetic_ops):
 		if(current_char == "/"):
@@ -140,8 +135,3 @@ while(current_char):
 	else:
 		print("Lexical Error!!!")
 		exit()
-
-
-
-
-
