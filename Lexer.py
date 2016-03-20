@@ -11,7 +11,7 @@ print("Lexing file -> " + sys.argv[1]);
 reserved_words = ["int","float", "char", "do", "for", "while", "if", "else"]
 delimiters = ["(", ")", "{", "}", ";"]
 arithmetic_ops = ["+", "-", "*", "/", "=", "%"]
-logic_ops = ["<", "<=", ">", ">=", "!=", "=="]
+logic_ops = ["<", "<=", ">", ">=", "!=", "==", "&&", "||"]
 
 
 
@@ -55,25 +55,30 @@ def get_comment():
 				break
 			else:
 				continue
+		elif current_char == "":
+			print("Lexical Error!! Did not close a comment")
+			exit()
 		comment += current_char
 		current_char = next_char()
 
 	return comment
 
-
-
-
-
+def get_line_comment():
+	comment = ""
+	global current_char
+	current_char = next_char()
+	while(current_char != "\n" and current_char != ""):
+		comment += current_char
+		current_char = next_char()
+	return comment
 
 
 
 
 current_char = next_char()
-
-
 while(current_char):
 
-	if(current_char == " " or current_char == "\n"):
+	if(current_char == " " or current_char == "\n" or current_char == "\t"):
 		current_char = next_char()
 		continue
 	#Floats e Inteiros
@@ -101,7 +106,13 @@ while(current_char):
 		if(current_char == "*"):	#caso seja um comentario
 			comment = "/" + current_char + get_comment()
 			print("[COMMENT, " + comment + "]")
+
 			current_char = next_char()
+		elif(current_char == "/"):
+			comment = get_line_comment()
+			print ("[COMMENT, " + comment + "]")
+			current_char = next_char()
+
 
 		else:	#caso fosse apenas uma /
 			print("[ARITHMETIC_OP, /]")
@@ -110,10 +121,6 @@ while(current_char):
 
 	#Operadores aritmeticos
 	elif(current_char in arithmetic_ops):
-		if(current_char == "/"):
-			current_char = next_char()
-			if(current_char == "/" or current_char == "*"):
-				continue
 		print("[ARITHMETIC_OP, " + current_char + "]")
 		current_char = next_char()
 		continue

@@ -1,3 +1,11 @@
-int x = (3.5 % 8) / 2
-/*comentario*/
-/*comentario**a/*/
+
+
+int main(){
+
+
+
+//	int x = (3.5 % 8) / 2
+	
+	/*comentario**a*/*/
+}
+
