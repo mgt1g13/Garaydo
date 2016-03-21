@@ -2,10 +2,10 @@
 
 int main(){
 
-
-
-//	int x = (3.5 % 8) / 2
-	
-	/*comentario**a*/*/
+	int x = (3.5 % 8) <== != && / 2;
+	int matheus = 2*3.5/+2;
+	float k = 9;
+	djashd23123 jsak;
+	/*comentario**a*/
 }
 

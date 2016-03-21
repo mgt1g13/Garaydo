@@ -11,9 +11,13 @@ print("Lexing file -> " + sys.argv[1]);
 reserved_words = ["int","float", "char", "do", "for", "while", "if", "else"]
 delimiters = ["(", ")", "{", "}", ";"]
 arithmetic_ops = ["+", "-", "*", "/", "=", "%"]
-logic_ops = ["<", "<=", ">", ">=", "!=", "==", "&&", "||"]
+logic_ops = ["<", "<=", ">", ">=", "!=", "==", "&&", "||"] #Assume-se operadores lógicos de até dois caracteres
 
+logic_ops_start = []
+for op in logic_ops:
+	logic_ops_start.append(op[0])
 
+print(logic_ops_start)
 
 f = open(sys.argv[1])
 
@@ -118,6 +122,13 @@ while(current_char):
 			print("[ARITHMETIC_OP, /]")
 			continue
 
+	elif(current_char == "="):
+		current_char = next_char()
+		if( "=" + current_char in logic_ops):
+			print("[LOGIC_OP, ="+ current_char+"]");
+			current_char = next_char()
+		else:
+			print("[ARITHMETIC_OP, =]")
 
 	#Operadores aritmeticos
 	elif(current_char in arithmetic_ops):
@@ -127,9 +138,15 @@ while(current_char):
 
 
 	#Operadores logicos
-	elif(current_char in logic_ops):
-		print("[LOGIC_OP, " + current_char + "]")
+	elif(current_char in logic_ops_start):
+		logic_op = current_char;
 		current_char = next_char()
+		if(logic_op + current_char in logic_ops):
+			logic_op += current_char	
+			print("[LOGIC_OP, " + logic_op + "]")
+			current_char = next_char()
+		elif(logic_op in logic_ops):
+			print("[LOGIC_OP, " + logic_op + "]")
 		continue
 
 	#Delimitadores
