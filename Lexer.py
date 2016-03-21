@@ -11,13 +11,18 @@ print("Lexing file -> " + sys.argv[1]);
 reserved_words = ["int","float", "char", "do", "for", "while", "if", "else"]
 delimiters = ["(", ")", "{", "}", ";"]
 arithmetic_ops = ["+", "-", "*", "/", "=", "%"]
-logic_ops = ["<", "<=", ">", ">=", "!=", "==", "&&", "||"] #Assume-se operadores lógicos de até dois caracteres
-
+logic_ops = ["<", "<=", ">", ">=", "!=", "==", "&&", "||"]
 logic_ops_start = []
+ambiguous = []
+
 for op in logic_ops:
 	logic_ops_start.append(op[0])
 
-print(logic_ops_start)
+
+for op in logic_ops_start:
+	if(op in arithmetic_ops):
+		ambiguous += op
+
 
 f = open(sys.argv[1])
 
@@ -68,6 +73,7 @@ def get_comment():
 	return comment
 
 def get_line_comment():
+	#Le um comentario até encontrar o fim da linha
 	comment = ""
 	global current_char
 	current_char = next_char()
@@ -122,13 +128,14 @@ while(current_char):
 			print("[ARITHMETIC_OP, /]")
 			continue
 
-	elif(current_char == "="):
+	elif(current_char in ambiguous):
+		old_char = current_char
 		current_char = next_char()
-		if( "=" + current_char in logic_ops):
-			print("[LOGIC_OP, ="+ current_char+"]");
+		if( old_char + current_char in logic_ops):
+			print("[LOGIC_OP, " + old_char + current_char+"]");
 			current_char = next_char()
 		else:
-			print("[ARITHMETIC_OP, =]")
+			print("[ARITHMETIC_OP, " + old_char + "]")
 
 	#Operadores aritmeticos
 	elif(current_char in arithmetic_ops):
@@ -147,11 +154,13 @@ while(current_char):
 			current_char = next_char()
 		elif(logic_op in logic_ops):
 			print("[LOGIC_OP, " + logic_op + "]")
-		continue
+		else:
+			print("Lexical Error!!!")
+			exit()
 
 	#Delimitadores
 	elif(current_char in delimiters):
-		print("DELIMITER, " + current_char + "]")
+		print("[DELIMITER, " + current_char + "]")
 		current_char = next_char()
 		continue
 

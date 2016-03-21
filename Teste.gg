@@ -1,11 +1,10 @@
+2 <= 2
+while
 
+// int main(){
 
-int main(){
+// 	int x = <== != && / 2;
+// 	int matheus = 2*3.5/+2;
 
-	int x = (3.5 % 8) <== != && / 2;
-	int matheus = 2*3.5/+2;
-	float k = 9;
-	djashd23123 jsak;
-	/*comentario**a*/
-}
+// }
 
