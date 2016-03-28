@@ -9,8 +9,7 @@ int main(){
 	
 
 	while(x1 != x2){
-		/*Comentario de trecho*/x1 = x2 + 5;
-
+	/*Comentario de trecho*/x1 = x2 + 5;
 	}
 
 }
